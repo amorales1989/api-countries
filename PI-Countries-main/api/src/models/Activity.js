@@ -22,6 +22,7 @@ module.exports = (sequelize) => {
         },
 
 
+
     }, { timestamps: false });
 };
 
@@ -30,29 +31,3 @@ module.exports = (sequelize) => {
 
 
 
-// module.exports = (sequelize) => {
-//     sequelize.define('activity,{
-//             id: {
-//         type: DataTypes.INTEGER,
-//         primaryKey: true,
-//         autoIncrement: true
-//     },
-//         name: {
-//         type: DataTypes.STRING,
-//         allowNull: false,
-//         unique: true
-//     },
-//         description: {
-//         type: DataTypes.STRING,
-//         allowNull: false
-//     },
-//         startDate: {
-//         type: DataTypes.DATE,
-//         allowNull: false
-//     },
-//         endDate: {
-//         type: DataTypes.DATE,
-//         allowNull: false
-//     },
-//     )
-// };
