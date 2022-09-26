@@ -19,10 +19,12 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-
+const {getApiInfo} = require('./src/infoDb/infoDb')
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   server.listen(3001, () => {
+    getApiInfo();
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
 });
+
