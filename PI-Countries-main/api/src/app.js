@@ -5,8 +5,9 @@ const morgan = require('morgan');
 const routes = require('./routes/index.js');
 
 require('./db.js');
-
+var cors = require('cors')
 const server = express();
+server.use(cors());
 
 server.name = 'API';
 

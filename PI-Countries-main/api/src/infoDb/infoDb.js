@@ -60,7 +60,7 @@ const getDbInfo = async () => {
 const getAllCountries  = async () => {
    // const apiInfo = await getApiInfo();
   //  const dbInfo = getDbInfo()
-    const allCountries = await Country.findAll()
+    const allCountries = await Country.findAll({include: Activity})
     return allCountries;
 };
 
@@ -72,11 +72,11 @@ const getCountryName = async (name)=>{
 
 const getCountryId = async(id)=>{
     let codeInMayus = id.toUpperCase() 
-    let country = []
+    let country = {}
     if(codeInMayus.length > 1){
     
         country=  await Country.findByPk(codeInMayus, {include: Activity})
-        
+        if (!country) return {}
         country = {
             id: country.id,
             name: country.name,
@@ -99,7 +99,7 @@ const getCountryId = async(id)=>{
     }
     
     console.log(country)
-    return [country]
+    return country
 }
 
 

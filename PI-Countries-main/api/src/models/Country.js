@@ -30,7 +30,7 @@ module.exports = (sequelize) => {
       
     },
     area:{
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       
     },
     population:{

@@ -4,6 +4,7 @@ const {Country, Activity} = require ('../db')
 const router = Router();
 
 
+
 router.use(json())
 router.get('/countries', async (req, res) => {
     try {
@@ -40,23 +41,30 @@ router.get('/countries/:id', async (req, res) => {
 
 
 router.post('/activities', async (req, res) => {
-    let {name, difficulty, duration, season, countryId} = req.body
-    let newActivity = await Activity.create({
-        name,
-        difficulty,
-        duration,
-        season,
-        countryId
-    });
-    console.log(newActivity)
-
-    const countrieDb = await Country.findAll({
-        where: {
-            id: countryId,
-        }
-    })
-    newActivity.addCountries(countrieDb)
-    res.status(200).send(newActivity);
+    try {
+        
+        let {name, difficulty, duration, season, countries} = req.body
+        let newActivity = await Activity.create({
+            name,
+            difficulty,
+            duration,
+            season,
+        });
+        console.log(newActivity)
+    
+        const countrieDb = await Country.findAll({
+            where: {
+                id: countries,
+            }
+        })
+        console.log(countrieDb)
+        await newActivity.addCountries(countrieDb)
+        const Act = await Activity.findOne({where: {id:newActivity.id}, include:Country})
+        res.status(200).send(Act);
+    } catch (error) {
+        console.log(error)
+        res.status(400).send(error)
+    }
 });
 
     router.get('/activities', async (req, res) =>{
@@ -64,6 +72,7 @@ router.post('/activities', async (req, res) => {
         res.status(200).send(activities);
     })
 
+    
 
 
 module.exports = router

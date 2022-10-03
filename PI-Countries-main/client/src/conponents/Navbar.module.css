@@ -1,0 +1,132 @@
+/* .navigation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #20232a;
+    padding: 20px 10px;
+}
+
+.navbar a {
+    display: block;
+}
+
+.bar_nav {
+    display: block;
+    cursor: pointer;
+}
+
+@media(min-width: 767px) {
+    .navbar {
+        display: flex;
+    }
+
+    .navigation {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .bar_nav {
+        display: none;
+    }
+
+}
+
+.navigation a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.navigation .logo {
+    font-size: 2.5rem;
+    color: #fff;
+    font-weight: bolder;
+}
+
+.navigation .navbar a {
+    font-size: 2rem;
+    margin-left: 2rem;
+}
+
+.navigation .navbar a:hover {
+    color: #B39C21;
+}
+
+.menu2 {
+    margin-top: 10px;
+} */
+
+.navbar {
+    height: 56px;
+    /* width: 100vw; */
+    /* top: 10px; */
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+    padding: 0 10px;
+    background-image: radial-gradient(circle,rgb(56, 56, 56), rgb(52, 220, 250));
+    /* border-radius: 16px; */
+    /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    justify-items: center;
+
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    
+}
+
+.navbar nav {
+    height: 100%;
+}
+
+.list {
+    margin: 10px;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    height: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 3px 3px 3px #ababab
+}
+
+.listitem {
+    margin: 0px;
+    display: flex;
+    height: 100%;
+    width: auto;
+    
+    
+}
+
+.listitem a {
+    color: black;
+    height: 100px;
+    padding: 1px 20px;
+    text-align: start;
+    text-decoration: none;
+    
+    
+}
+
+.listitem a:hover,
+.listitem a.active {
+    /* background-color: #808080; */
+    color: white;
+}
+
+.shadow{
+    filter: drop-shadow(20px 20px 20px black);
+    background-color: aqua;
+}
+
+.final{
+    margin-left: 750px;
+}
+
+.link{
+    filter: drop-shadow( 3px 3px 3px #5f5e5e)
+}
