@@ -10,20 +10,7 @@ export function getCountries() {
     }
 }
 
-// export function addActivity(body) {
-//     return async function (dispatch) {
-//         try {
-//             //console.log(body)  
-//             var activity = await axios.post(`http://localhost:3001/activities`, body);
-//             return dispatch({
-//                 type: 'POST_ACTIVITY',
-//                 payload: activity.data
-//             })
-//         } catch (error) {
-//             console.log(error)
-//         }
-//     }
-// }
+
 
 export function postActivities(payload) {  //payload es el objeto que me llega por el formulario del front
     return async function (dispatch) {
@@ -32,23 +19,6 @@ export function postActivities(payload) {  //payload es el objeto que me llega p
         return response;
     }
 };
-
-
-
-
-// export function getActivities() {
-//     return async function (dispatch) {
-//         try {
-//             let json = await axios.get('http://localhost:3001/activities');
-//             return dispatch({
-//                 type: 'GET_ACTIVITIES',
-//                 payload: json.data
-//             })
-//         } catch (error) {
-//             console.log(error)
-//         }
-//     };
-// }
 
 export function getActivities() {
     return async function (dispatch) {
@@ -102,7 +72,7 @@ export function filterActivity(payload) {  //payload es el value de la opcion qu
 export function getDetails(id){
     return async function(dispatch){
         
-        const countryDetailByAxios=await axios.get(`http://localhost:3001/countries/${id}`)
+        const countryDetailByAxios=await axios.get(`http://localhost:3001/countries/search?id=${id}`);
         const countryDetail= await countryDetailByAxios.data
         
         return dispatch({

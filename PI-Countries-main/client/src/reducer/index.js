@@ -3,7 +3,6 @@ const initialState = {
     countries: [],
     allCountries: [],
     details: [],
-    countriesBackup: [],
     allActivities: [],
     activities: [],
 }

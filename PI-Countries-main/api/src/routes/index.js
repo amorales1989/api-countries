@@ -32,8 +32,8 @@ router.get('/countries', async (req, res) => {
     }
 })
 
-router.get('/countries/:id', async (req, res) => {
-    const  idCountry  = req.params.id
+router.get('/countries/search', async (req, res) => {
+    const  idCountry  = req.query.id.toUpperCase()
     const country = await getCountryId(idCountry)
     console.log(country)
     res.send(country)
@@ -71,8 +71,37 @@ router.post('/activities', async (req, res) => {
         const activities = await getActivities();
         res.status(200).send(activities);
     })
-
     
-
-
 module.exports = router
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// router.put('/activities', async (req, res) => {
+//     try {
+//         const activities = await getActivities();
+//         let { id, name, difficulty, duration, season, countries } = req.body
+//         const newAct = await activities.find(p => p.id === id)
+
+//         newAct.name = name;
+//         newAct.difficulty = difficulty;
+
+//         res.status(200).send(newAct);
+//     }
+//     catch (error) {
+//         console.log(error)
+//         res.status(400).send(error)
+//     }
+// }),

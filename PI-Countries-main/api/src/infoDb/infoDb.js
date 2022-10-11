@@ -58,8 +58,6 @@ const getDbInfo = async () => {
 
 //Ruta para obtener todos los paises
 const getAllCountries  = async () => {
-   // const apiInfo = await getApiInfo();
-  //  const dbInfo = getDbInfo()
     const allCountries = await Country.findAll({include: Activity})
     return allCountries;
 };

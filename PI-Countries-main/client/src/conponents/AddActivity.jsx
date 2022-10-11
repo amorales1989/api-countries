@@ -5,26 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import s from "./AddActivity.module.css"
 
 
-function validate(input) {
-    let errors = {};
-    if (!input.name) {
-        //input es mi estado local, si en mi estado lical no existe un name
-        errors.name = "Nombre de la actividad requerido"; //en mi objeto errors voy a pner un string que diga "nombre requerido"
-    } else if (!input.difficulty) {
-        errors.difficulty = "Nivel de dificultad requerido";
-    } else if (input.difficulty < 1 || input.difficulty > 5) {
-        errors.difficulty = "Nivel de dificultad no valido (1-5)";
-    } else if (!input.duration) {
-        errors.duration = "Duración de la actividad requerida";
-    } else if (input.duration > 24) {
-        errors.duration = "Duración no valida (0hs-24hs)";
-    } else if (input.season.length === 0) {
-        errors.season = "Temporada de la actividad requerida";
-    } else if (input.countries.length < 1) {
-        errors.countries = "País/paises requeridos";
-    }
-    return errors;
-}
 
 
 export default function ActivityCreate() {
@@ -43,6 +23,26 @@ export default function ActivityCreate() {
         countries: [], //lo seteo en un array para tener la posibilidad de poner más de una
 
     });
+    function validate() {
+        let errors = {};
+        if (!input.name) {
+            //input es mi estado local, si en mi estado lical no existe un name
+            errors.name = "Nombre de la actividad requerido"; //en mi objeto errors voy a pner un string que diga "nombre requerido"
+        } else if (!input.difficulty) {
+            errors.difficulty = "Nivel de dificultad requerido";
+        } else if (input.difficulty < 1 || input.difficulty > 5) {
+            errors.difficulty = "Nivel de dificultad no valido (1-5)";
+        } else if (!input.duration) {
+            errors.duration = "Duración de la actividad requerida";
+        } else if (input.duration > 120 && input.duration < 1) {
+            errors.duration = "Duración no valida (1min - 120min)";
+        } else if (input.season.length === 0) {
+            errors.season = "Temporada de la actividad requerida";
+        } else if (input.countries.length < 1) {
+            errors.countries = "País/paises requeridos";
+        }
+        return errors;
+    }
 
     const thereAreErrors = Object.values(errors).some((error) => error);
 
@@ -50,7 +50,13 @@ export default function ActivityCreate() {
         setInput({
             ...input,
             [e.target.name]: e.target.value
-        })
+        });
+        setErrors(
+			validate({
+				...input,
+				[e.target.name]: e.target.value,
+			})
+		);
         console.log(input)
     }
 
@@ -64,36 +70,21 @@ export default function ActivityCreate() {
         }
     }
 
-console.log(input)
+
 
     function handleSelectCountries(e) {
+        if (!input.countries.includes(e.target.value)){
         setInput({
             ...input,
             countries: [...input.countries, e.target.value]
         })
     }
-
-    //     const selectCountry = JSON.parse(e.target.value);
-    //     const val = input.countries(
-    //         (countries) => countries.name === selectCountry.name
-    //     );
-    //     if (!val) {
-    //         const newInput = {
-    //             ...input,
-    //             countries: [...input.countries, selectCountry],
-    //             id: [...input.id, selectCountry.name],
-    //         };
-    //         setInput(newInput);
-    //         setErrors(validate(newInput));
-    //     }
-    //     e.target.value = "";
-    
-    // console.log(input.id);
+}
 
     function handleDelete(d) {
         const newInput = {
             ...input,
-            countries: input.countries.filter((country) => country !== d), //filtro por todo lo que no sea esae elemento
+            countries: input.countries.filter((country) => country !== d), //filtro por todo lo que no sea ese elemento
         };
         console.log(newInput)
         setInput(newInput);
@@ -102,132 +93,86 @@ console.log(input)
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(input)
+        setErrors(validate(input));
+		const errorCompletarFormu = validate(input);
+		if (Object.values(errorCompletarFormu).length !== 0 || !input.countries) {
+			alert("Todos los campos deben ser requeridos");
+		} else {
         dispatch(postActivities(input));
         alert("Actividad creada");
-        // setInput({
-        //     name: "",
-        //     difficulty: "",
-        //     duration: "",
-        //     season: [],
-        //     countries: [],
-        // });
-        // //ya se creó la actividad llevame a ver si está creado - vuelve solo a home
+ //ya se creó la actividad llevame a ver si está creado - vuelve solo a home
         history.push("/countries");
     }
+}
 
     useEffect(() => {
         dispatch(getCountries())
     }, []);
 
     return (
-        <div>
+        <div className={s.form}>
+            <div className={s.volver}>
             <Link to='/countries'><button>volver</button></Link>
-            <h1>Crea tu Actividad!!!</h1>
-            <form onSubmit={(e) => handleSubmit(e)}>
+            </div>
+            <h1 className={s.titulo}>Crea tu Actividad!!!</h1>
+            <form onSubmit={(e) => handleSubmit(e)} className={s.formulario}>
                 <div>
-                    <label>Nombre:</label>
+                    <label  className={s.display}>Nombre:</label>
                     <input
                         type="text"
                         value={input.name}
                         name="name"
                         onChange={(e) => handleChange(e)}
-                        placeholder="--Nombre de la actividad--" />
+                        placeholder="--Nombre de la actividad--"
+                        required/>
                 </div>
                 <div>
-                    <input
-                        type="range"
-                        id="get"
-                        name="difficulty"
-                        value={input.difficulty}
-                        min="1"
-                        max="5"
-                        step="1"
-                        onChange={(e) => handleChange(e)}
-                        className={s.input2}
-                        required
-                        // value="1"
-                        list="difficulty"
-                    />
-                    <p>{input.difficulty}</p>
-                    <datalist id="difficulty">
-                        <option value="1"></option>
-                        <option value="2"></option>
-                        <option value="3"></option>
-                        <option value="4"></option>
-                        <option value="5"></option>
-                    </datalist>
-                    {/* <input type="text" id="put" /> */}
+                <label className={s.display}>Dificultad:</label>
+                <select
+						name="difficulty"
+						value={input.difficulty}
+						className=""
+						onChange={e => handleChange(e)}
+					>
+						<option value="">Selecciona la dificultad</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						{errors.difficulty && <p className="error">{errors.difficulty}</p>}
+					</select>
+                    
                 </div>
                 <div>
-                    <label>Duracion:</label>
+                    <label className={s.display}>Duracion en minutos:</label>
                     <input
                         type="number"
                         value={input.duration}
-                        name="duration" 
-                        onChange={(e) => handleChange(e)}/>
+                        name="duration"
+                        autocomplete="off"
+                        min="1"
+                        max="120"
+                        onChange={e => handleChange(e)}
+                    />
+                    {errors.duration && <p className="error">{errors.duration}</p>}
                 </div>
                 <div>
-            <label className={s.alllabel}>Temporada / s:</label>
-                    <fieldset className={s.divradio}>
-                        {/* <legend>Temporada:</legend> */}
-                        {/* <label>Temporada:</label> */}
-                        <label>
-                            <input
-                                type="checkbox"
-                                value="Summer"
-                                onChange={(e) => handleCheck(e)}
-                            // required
-                            />
-                            Verano
-                        </label>
-                        <label>
-                            <input
-                                type="checkbox"
-                                value='Autumn'
-                                onChange={(e) => handleCheck(e)}
-                            // required
-                            />
-                            Otoño
-                        </label>
-                        <label>
-                            <input
-                                type="checkbox"
-                                value='Winter'
-                                onChange={(e) => handleCheck(e)}
-                            // required
-                            />
-                            Invierno
-                        </label>
-                        <label>
-                            <input
-                                type="checkbox"
-                                value='Spring'
-                                onChange={(e) => handleCheck(e)}
-                            // required
-                            />
-                            Primavera
-                        </label>
-
-                        {/* <select onChange={(e) => handleChangeSeason(e)} required> */}
-                        {/* <option value="" disable selected hidden> Seleccionar una o más temporadas</option>  */}
-                        {/* hidden -> oculta la opción */}
-                        {/* {season.map((s) => (
-                <option value={s} name="season">{s}</option>
-              ))} */}
-
-                        {/* </select> */}
-                        {/* <ul>
-            {input.season.map((s) => (
-                <li>{s}</li>
-              ))} */}
-                        {/* ↑lista que va a tomar mi estado input.countries, y me va a renderizar cada cada cosa que vaya marcando en el select/ para ver lo que voy seleccionando */}
-                        {/* </ul> */}
-                    </fieldset>
-                    {errors.season && ( //si existe un error en el nombre, entonces renderizame un p que diga el error
-                        <p>{errors.season}</p>
-                    )}
-                </div>
+					<label className={s.display}>Estación del año</label>
+					<select
+						value={input.season}
+						name="season"
+						onChange={e => handleChange(e)}
+					>
+						<option value="">Selecciona la estación</option>
+						<option value="Summer">Verano</option>
+						<option value="Autumn">Otoño</option>
+						<option value="Winter">Invierno</option>
+						<option value="Spring">Primavera</option>
+						{errors.season && <p className="error">{errors.season}</p>}
+					</select>
+				</div>
+                <label className={s.display}>País</label>
                 <select name="countries" onChange={(e) => handleSelectCountries(e)}
                 value = ""
                 >
@@ -251,12 +196,14 @@ console.log(input)
                     )) } 
                 </div>
                 <div>
-                    <button type="Submit" >
+                    <button type="Submit" className={s.submit}>
                         {" "}
                         Crear
                     </button>
                 </div>
             </form>
+            
+			
         </div>
     )
 

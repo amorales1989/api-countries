@@ -5,7 +5,7 @@ import s from "./Paginado.module.css"
 export default function Paginado ({countriesPerPage, allCountries, paginado}){
     const pageNumber = []
 
-    for( let i=1; i<=Math.ceil(allCountries/countriesPerPage); i++){
+    for( let i=1; i<=Math.ceil(allCountries/countriesPerPage); i++){ //redondea para arriba la cantidad de paises por pagina
         pageNumber.push(i)
     }
 
@@ -15,7 +15,7 @@ export default function Paginado ({countriesPerPage, allCountries, paginado}){
                 <ul className={s.paginado}>
                     {pageNumber && pageNumber.map(number => (
                         <button className={s.number} key={number}>
-                            <div className={s.img} onClick={() => paginado(number)}>{number}</div>
+                            <div className={s.img} onClick={() => paginado(number)}> {number} </div>
                         </button>
                     ))}
                 </ul>

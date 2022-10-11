@@ -16,6 +16,7 @@ export default function Detail(){
         return()=>dispatch(cleanDetails())
     },[dispatch])
     const details=detailsCountry;
+    console.log(details)
     return(
 
         details?<div className={style.detail}>
@@ -24,23 +25,22 @@ export default function Detail(){
                 <img className={style.img} src={details.flag}></img>
                 <div className={style.infoDetail}>
                     <p><b>Name:</b> {details.name}</p>
-                    <p><b>Id:</b> {details.id}</p>
-                    <p><b>Continent:</b> {details.subregion}</p>
                     <p><b>Capital:</b> {details.capital}</p>
                     <p><b>Subregion:</b> {details.subregion}</p>
-                    <p><b>Area:</b> {details.area}</p>
-                    <p><b>Poblation:</b> {details. population}</p>
-                    <p><b>Activities:</b></p> 
+                    <p><b>Id:</b> {details.id}</p>
+                    <p><b>Area:</b> {details.area} km2</p>
+                    <p><b>Poblation:</b> {details. population} (habitantes)</p>
+                    <p><b><h2>Activities:</h2></b></p> 
                     <div>
                             {
                                 details.activities?.length>0?details.activities.map(a=>
                                     <ul>
                                         <h3>{a.name}</h3>
-                                        <h5>Difficulty: {a.difficulty}</h5>
-                                        <h5>Duration: {a.duration}</h5>
-                                        <h5>Season: {a.season}</h5>
+                                        <p>Difficulty: {a.difficulty}</p>
+                                        <p>Duration: {a.duration}</p>
+                                        <p>Season: {a.season}</p>
                                     </ul>
-                                ):'-'
+                                ):'Sin Actividades'
                             }
                     </div>
                     <Link to='/countries'>

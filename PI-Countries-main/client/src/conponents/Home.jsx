@@ -1,4 +1,4 @@
-import {Fragment, React} from "react";
+import React from "react";
 import {useState, useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux'
 import { getCountries, filterCountryByContinent, getActivities, filterActivity, orderByName, orderByPopulation} from "../actions";
@@ -19,7 +19,7 @@ export default function Home(){
     const activities = useSelector((state) => state.activities);
     const [orden, setOrden]= useState('')
     const [currentPage, setCurrentPage] = useState(1)
-    const [countriesPerPage, setCountriesPerPage] = useState(10)
+    const countriesPerPage = 10;
     const indexOfLastCountry  = currentPage * countriesPerPage 
     const indexOfFirstCountry = indexOfLastCountry - countriesPerPage
     const currentCountries  = allCountries.slice(indexOfFirstCountry,indexOfLastCountry)
@@ -124,7 +124,7 @@ export default function Home(){
                         return (
                             <div>
                                 <Link to={"/countries/" + c.id}>
-                                    <Card onClick={e=> {handleClick(e)}} name={c.name} image={c.flag} continent={c.continent} key={c.id} />
+                                    <Card onClick={e=> {handleClick(e)}} name={c.name} image={c.flag} continent={c.continent} id={c.id} />
                                 </Link>
                             </div>
                         )
