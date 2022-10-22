@@ -4,7 +4,7 @@
   "description": "![HenryLogo](https://d31uz8lwfmyn8g.cloudfront.net/Assets/logo-henry-white-lg.png)",
   "main": "index.js",
   "scripts": {
-    "build": "react-scripts build",
+    "build": "react-scripts build --output public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
