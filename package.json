@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "build": "^0.1.4"
+    "build": "^0.1.4",
+    "vercel": "^28.4.12"
   }
 }
