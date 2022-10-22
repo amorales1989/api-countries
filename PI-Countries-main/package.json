@@ -4,7 +4,7 @@
   "description": "![HenryLogo](https://d31uz8lwfmyn8g.cloudfront.net/Assets/logo-henry-white-lg.png)",
   "main": "index.js",
   "scripts": {
-    "build": "react-scripts build --output public",
+    "build": "react-scripts build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "react-build": "^1.0.8",
     "vercel": "^28.4.12"
   }
 }
