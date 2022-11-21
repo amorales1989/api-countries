@@ -24,7 +24,7 @@ require('dotenv').config();
 const {PORT} = process.env
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
-  server.listen(`${PORT}`, () => {
+  server.listen(PORT, () => {
     getApiInfo();
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
